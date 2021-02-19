@@ -52,7 +52,7 @@ int comparison(const void* a, const void* b)
   int sumTuristIndexB = b1->getSumIndexDestination();
 
   bool condition = a1->getCost() > b1->getCost() ||
-                  (a1->getCost() >= b1->getCost() &&
+                  (a1->getCost() == b1->getCost() &&
                   sumTuristIndexA < sumTuristIndexB);
   
 	return condition;
@@ -76,16 +76,13 @@ void printResult(int length, Edge *result)
 	cout << minimumCost << " " << sumTuristIndex << endl;
 
   map<pair<int, int>, Edge>::iterator it;
-  
   for (int i = 0; i <= length; i++)
   { 
     int count = 0;
     
     for (it = results.begin(); it != results.end(); ++it)
-    {
       if(i == it->first.first || i == it->first.second)
         count++;
-    }
       
     cout  << count << " ";
   }
