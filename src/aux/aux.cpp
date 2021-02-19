@@ -58,16 +58,9 @@ int comparison(const void* a, const void* b)
 	return condition;
 }
 
-struct compareEdge {
-  bool operator()(Edge *lhs, Edge *rhs)
-  {
-    return lhs->getSource().getIndex() < rhs->getSource().getIndex();
-  }
-};
-
 void printResult(int length, Edge *result)
 {
-  map<int, Edge> results;
+  map<pair<int, int>, Edge> results;
 
 	int minimumCost = 0;
   int sumTuristIndex = 0;
@@ -75,18 +68,37 @@ void printResult(int length, Edge *result)
   {
 		minimumCost = minimumCost + result[j].getCost();
     sumTuristIndex = sumTuristIndex + result[j].getSumIndexDestination();
-    results.insert(pair<int, Edge>(result[j].getSource().getIndex(), result[j]));
+    results[make_pair(
+      result[j].getSource().getIndex(),
+      result[j].getDestination().getIndex())] = result[j];
   }
 
 	cout << minimumCost << " " << sumTuristIndex << endl;
 
-	for (int j = 0; j < length; j++) 
-	{
-		cout  << result[j].getSource().getIndex()
-					<< " "
-					<< result[j].getDestination().getIndex()
-					<< " "
-					<< result[j].getCost()
-					<< endl;
-	}
+  map<pair<int, int>, Edge>::iterator it;
+  
+  for (int i = 0; i <= length; i++)
+  { 
+    int count = 0;
+    
+    for (it = results.begin(); it != results.end(); ++it)
+    {
+      if(i == it->first.first || i == it->first.second)
+        count++;
+    }
+      
+    cout  << count << " ";
+  }
+
+  cout << endl;
+
+  for (it = results.begin(); it != results.end(); ++it)
+  { 
+    cout  << it->second.getSource().getIndex()
+          << " "
+          << it->second.getDestination().getIndex()
+          << " "
+          << it->second.getCost()
+          << endl;
+  } 
 }
