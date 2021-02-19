@@ -1,60 +1,6 @@
-#include <bits/stdc++.h>
-#include "./graph/graph.hpp"
-#include "./subset/subset.hpp"
+#include "./aux/aux.hpp"
+
 using namespace std;
-
-int find(Subset subsets[], int i)
-{
-	if (subsets[i].getParent() != i)
-		subsets[i].setParent(find(subsets, subsets[i].getParent()));
-
-	return subsets[i].getParent();
-}
-
-void Union(Subset subsets[], int x, int y)
-{
-	int xroot = find(subsets, x);
-	int yroot = find(subsets, y);
-
-	if (subsets[xroot].getRank() < subsets[yroot].getRank())
-		subsets[xroot].setParent(yroot);
-	else if (subsets[xroot].getRank() > subsets[yroot].getRank())
-		subsets[yroot].setParent(xroot);
-
-	else
-	{
-		subsets[yroot].setParent(xroot);
-		int rank = subsets[xroot].getRank() + 1;
-		subsets[xroot].setRank(rank);
-	}
-}
-
-int myComp(const void* a, const void* b)
-{
-	Edge* a1 = (Edge*)a;
-	Edge* b1 = (Edge*)b;
-	return a1->getCost() > b1->getCost();
-}
-
-void printResult(int length, Edge *result)
-{
-	int minimumCost = 0;
-	for (int j = 0; j < length; j++) 
-		minimumCost = minimumCost + result[j].getCost();
-
-	cout << minimumCost << endl;
-
-	for (int j = 0; j < length; j++) 
-	{
-		cout  << result[j].getSource() 
-					<< " "
-					<< result[j].getDestination()
-					<< " "
-					<< result[j].getCost()
-					<< endl;
-	}
-}
-
 
 void KruskalMST(Graph* graph)
 {
@@ -63,8 +9,10 @@ void KruskalMST(Graph* graph)
 	int edges = 0;
 	int i = 0;
 
-	qsort(graph->getEdges(), graph->getEdgeLength(), sizeof(graph->getEdges()[0]),
-          myComp);
+	qsort(graph->getEdges(),
+				graph->getEdgeLength(),
+				sizeof(graph->getEdges()[0]),
+        comparison);
 
 	Subset* subsets = new Subset[(vertexLength * sizeof(Subset))];
 
@@ -78,8 +26,8 @@ void KruskalMST(Graph* graph)
 	{
 		Edge next_edge = graph->getEdges()[i++];
 
-		int x = find(subsets, next_edge.getSource());
-		int y = find(subsets, next_edge.getDestination());
+		int x = find(subsets, next_edge.getSource().getIndex());
+		int y = find(subsets, next_edge.getDestination().getIndex());
 
 		if (x != y)
 		{
@@ -95,8 +43,26 @@ int main()
 {
 	int N;
 	int T;
-
 	scanf("%d %d", &N, &T);
+
+	Spot *spots = new Spot[N];
+
+  // Ocorre um bug que na primeira entrada do getline()
+  // ela não realiza o input das entradas. Dessa forma, adicionei essa
+  // primeira entrada para evitar inconsistencia na lógica
+	vector<int> turistIndexes = getTuristIndexes();
+	turistIndexes = getTuristIndexes();
+
+	vector<int>::iterator it;
+	int i = 0;
+  for(it = turistIndexes.begin(); it != turistIndexes.end(); ++it)
+	{
+		Spot spot = Spot(i, *it);
+
+		spots[i] = spot;
+		i++;
+	}
+
 	Graph* graph = new Graph(N, T);
 
 	for(int i = 0; i < T; i++)
@@ -107,7 +73,7 @@ int main()
 
 		scanf("%d %d %d", &p_i, &p_j, &c_t);
 
-		graph->setStretch(i, p_i, p_j, c_t);
+		graph->setStretch(i, spots[p_i], spots[p_j], c_t);
   }
 
 	KruskalMST(graph);

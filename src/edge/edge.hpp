@@ -1,4 +1,5 @@
 #include <iostream>
+#include "./../spot/spot.hpp"
 #ifndef __TP2_ALG___
 #define __TP2_ALG__
 
@@ -7,19 +8,22 @@ using namespace std;
 class Edge
 {
   private:
-    int source;
-    int destination;
+    Spot source;
+    Spot destination;
     int cost;
 
   public:
     Edge();
-    Edge(int source, int destination, int cost);
-    int getSource();
-    void setSource(int value);
-    int getDestination();
-    void setDestination(int value);
+    Edge(Spot source, Spot destination, int cost);
+    Spot getSource();
+    void setSource(Spot value);
+    Spot getDestination();
+    void setDestination(Spot value);
     int getCost();
     void setCost(int value);
+    int getSumIndexDestination();
 };
+
+bool operator<(const Edge &a, const Edge &b);
 
 #endif

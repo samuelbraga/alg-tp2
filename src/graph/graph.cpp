@@ -14,7 +14,7 @@ int Graph::getEdgeLength() { return this->edgeLength; }
 
 Edge *Graph::getEdges() { return this->edges; }
 
-void Graph::setStretch(int index, int source, int destination, int cost)
+void Graph::setStretch(int index, Spot source, Spot destination, int cost)
 {
   edges[index].setSource(source);
   edges[index].setDestination(destination);

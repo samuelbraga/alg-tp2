@@ -17,7 +17,7 @@ class Graph {
     int getVertexLength();
     int getEdgeLength();
     Edge *getEdges();
-    void setStretch(int index, int source, int destination, int weigh);
+    void setStretch(int index, Spot source, Spot destination, int weigh);
 };
 
 #endif
