@@ -2,11 +2,11 @@
 
 Edge::Edge() {}
 
-Edge::Edge(int source, int destination, int weight)
+Edge::Edge(int source, int destination, int cost)
 {
   this->source = source;
   this->destination = destination;
-  this->weight = weight;
+  this->cost = cost;
 }
 
 int Edge::getSource() { return this->source; }
@@ -17,6 +17,6 @@ int Edge::getDestination() { return this->destination; }
 
 void Edge::setDestination(int value) { this->destination = value; }
 
-int Edge::getWeight() { return this->weight; }
+int Edge::getCost() { return this->cost; }
 
-void Edge::setWeight(int value) { this->weight = value; }
+void Edge::setCost(int value) { this->cost = value; }

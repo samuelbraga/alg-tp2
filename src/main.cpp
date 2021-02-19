@@ -33,8 +33,28 @@ int myComp(const void* a, const void* b)
 {
 	Edge* a1 = (Edge*)a;
 	Edge* b1 = (Edge*)b;
-	return a1->getWeight() > b1->getWeight();
+	return a1->getCost() > b1->getCost();
 }
+
+void printResult(int length, Edge *result)
+{
+	int minimumCost = 0;
+	for (int j = 0; j < length; j++) 
+		minimumCost = minimumCost + result[j].getCost();
+
+	cout << minimumCost << endl;
+
+	for (int j = 0; j < length; j++) 
+	{
+		cout  << result[j].getSource() 
+					<< " "
+					<< result[j].getDestination()
+					<< " "
+					<< result[j].getCost()
+					<< endl;
+	}
+}
+
 
 void KruskalMST(Graph* graph)
 {
@@ -68,18 +88,7 @@ void KruskalMST(Graph* graph)
 		}
 	}
 
-	cout << "Following are the edges in the constructed "
-			"MST\n";
-
-	int minimumCost = 0;
-	for (int j = 0; j < edges; j++) 
-	{
-		cout << result[j].getSource() << " -- " << result[j].getDestination()
-			<< " == " << result[j].getWeight() << endl;
-		minimumCost = minimumCost + result[j].getWeight();
-	}
-	cout << "Minimum Cost Spanning Tree: " << minimumCost
-		<< endl;
+	printResult(edges, result);
 }
 
 int main()

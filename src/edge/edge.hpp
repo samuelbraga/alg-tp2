@@ -9,17 +9,17 @@ class Edge
   private:
     int source;
     int destination;
-    int weight;
+    int cost;
 
   public:
     Edge();
-    Edge(int source, int destination, int weight);
+    Edge(int source, int destination, int cost);
     int getSource();
     void setSource(int value);
     int getDestination();
     void setDestination(int value);
-    int getWeight();
-    void setWeight(int value);
+    int getCost();
+    void setCost(int value);
 };
 
 #endif
