@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-Wall -Wextra
-EXEC=./tp2
-TMPOUT=tp2.testresult
+EXEC=./tp02
+TMPOUT=tp02.testresult
 
 $(EXEC): src/main.cpp spot.o edge.o graph.o subset.o aux.o
 	$(CC) $(CFLAGS) src/main.cpp spot.o edge.o graph.o subset.o aux.o -o $(EXEC)
@@ -25,5 +25,5 @@ test: $(EXEC)
 	@bash run_tests.sh $(EXEC) $(TMPOUT)
 
 clean:
-	rm -rf tp2 spot.o edge.o graph.o subset.o aux.o
+	rm -rf tp02 spot.o edge.o graph.o subset.o aux.o
 	
